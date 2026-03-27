@@ -18,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="id" className={`${outfit.variable} dark`} suppressHydrationWarning>
+    <html lang="id" className={`${outfit.variable}`} suppressHydrationWarning>
       <body className="min-h-screen bg-background text-foreground flex flex-col font-sans">
         {children}
       </body>

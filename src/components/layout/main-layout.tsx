@@ -17,7 +17,7 @@ const navItems = [
 
 export function MainLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [isDark, setIsDark] = React.useState(true);
+  const [isDark, setIsDark] = React.useState(false);
 
   React.useEffect(() => {
     // Pemeriksaan awal untuk merender ikon mode sesuai dengan pengaturan OS/Pilihan saat ini
