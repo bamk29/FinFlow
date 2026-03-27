@@ -10,7 +10,7 @@ function getKeyboardMenu() {
     keyboard: [
       [{ text: "🟢 Catat Pemasukan" }, { text: "🔴 Catat Pengeluaran" }],
       [{ text: "🗓️ Catat Tagihan/Iuran" }, { text: "📌 Cek Saldo & Tagihan" }],
-      [{ text: "❌ Batalkan Interaksi" }]
+      [{ text: "🌐 Buka Dashboard Web" }, { text: "❌ Batalkan Interaksi" }]
     ],
     resize_keyboard: true
   };
@@ -88,6 +88,12 @@ export async function POST(req: Request) {
     if (t === '/start' || t === '/menu' || t === 'hi' || t === 'halo' || t === 'hai' || t === 'hello') {
       delete memoryStates[chatId];
       await sendMessage(chatId, "📊 Silakan gunakan tombol di bawah untuk mengelola keuangan rumah tangga Anda:", getKeyboardMenu());
+      return NextResponse.json({ ok: true });
+    }
+
+    // Tombol Buka Dashboard Web
+    if (t === '🌐 buka dashboard web') {
+      await sendMessage(chatId, "🌐 *Akses Dashboard Web Anda:*\n\n👉 https://bkfinflow.vercel.app\n\nBuka link di atas untuk melihat Laporan, Rencana, dan mengelola catatan keuangan keluarga Anda secara lengkap!", getKeyboardMenu());
       return NextResponse.json({ ok: true });
     }
 
