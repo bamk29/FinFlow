@@ -176,7 +176,7 @@ async function handleUpdate(update: any) {
           state.amount = matchNum ? matchNum[0] : '0';
 
           state.step = 'ASK_PLAN_DESC';
-          await sendMessage(chatId, `Perkiraan Uang: Rp ${parseFloat(state.amount).toLocaleString('id-ID')}\n\nMasukkan Nama / Judul Tagihannya: (Misalnya: SPP Bulan April, Rekening Air)`);
+          await sendMessage(chatId, `Perkiraan Uang: Rp ${parseFloat(state.amount || '0').toLocaleString('id-ID')}\n\nMasukkan Nama / Judul Tagihannya: (Misalnya: SPP Bulan April, Rekening Air)`);
           return;
        }
 

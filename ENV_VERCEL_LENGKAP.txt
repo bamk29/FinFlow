@@ -1,0 +1,21 @@
+# ==========================================
+# KONFIGURASI ENV UNTUK VERCEL (Bkfinflow)
+# ==========================================
+
+# 1. Database Supabase (Transaction Mode Port 6543)
+DATABASE_URL="postgresql://postgres.crbiwglyeiankhjkfolm:p9YgUPb8HtS2GGRu@aws-1-ap-northeast-1.pooler.supabase.com:6543/postgres"
+
+# 2. Telegram Bot Token
+TELEGRAM_BOT_TOKEN="8711901469:AAG__6537ojySrTpBqSp0q0PGYU1zqOk4oU"
+
+# 3. Password Dashboard Web
+WEB_PASSWORD="waklentol"
+
+# 4. Environment
+NODE_ENV="production"
+
+# ==========================================
+# LINK AKTIVASI WEBHOOK (Buka di Browser):
+# ==========================================
+# https://api.telegram.org/bot8711901469:AAG__6537ojySrTpBqSp0q0PGYU1zqOk4oU/setWebhook?url=https://bkfinflow.vercel.app/api/telegram
+# ==========================================
