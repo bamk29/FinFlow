@@ -35,3 +35,11 @@ export async function addPlanning(formData: FormData) {
   revalidatePath('/ideas');
   redirect('/ideas');
 }
+
+// Hapus rencana/tagihan berdasarkan ID
+export async function deleteIdea(id: string) {
+  const { eq } = await import('drizzle-orm');
+  await db.delete(ideas).where(eq(ideas.id, id as any));
+  revalidatePath('/ideas');
+  revalidatePath('/');
+}

@@ -99,34 +99,60 @@ export function ReportsClientUI({ initialData }: { initialData: any[] }) {
 
       <Card className="shadow-none border-muted overflow-hidden">
         <CardContent className="p-0 text-[13px]">
-          <table className="w-full border-collapse">
-            <thead className="bg-muted/30 text-[10px] text-muted-foreground uppercase"><tr className="border-b"><th className="p-2 px-4 text-left font-bold">Ket</th><th className="p-2 px-3 text-left font-bold">Waktu</th><th className="p-2 px-4 text-right font-bold">Rp</th><th className="p-2 px-4 text-right font-bold w-20">Aksi</th></tr></thead>
-            <tbody className="divide-y">
-              {filteredData.map((trx) => (
-                <tr key={trx.id} className="hover:bg-muted/20 transition-colors">
-                  {editingId === trx.id ? (
-                    <>
-                      <td className="p-2 px-3"><input type="text" value={editTitle} onChange={e => setEditTitle(e.target.value)} className="w-full p-1 border rounded text-xs font-bold" /></td>
-                      <td className="p-2 px-3 text-[10px] text-muted-foreground">Editing..</td>
-                      <td className="p-2 px-3"><input type="number" value={editAmount} onChange={e => setEditAmount(e.target.value)} className="w-full p-1 border rounded text-right text-xs font-bold" /></td>
-                      <td className="p-2 px-4 text-right flex gap-1 justify-end"><button onClick={() => handleSaveEdit(trx.id)} className="p-1 bg-emerald-500 text-white rounded"><Check className="w-3 h-3"/></button><button onClick={() => setEditingId(null)} className="p-1 bg-muted rounded"><X className="w-3 h-3"/></button></td>
-                    </>
-                  ) : (
-                    <>
-                      <td className="p-3 px-4 font-bold flex flex-col">
-                        <span>{trx.title}</span>
-                        <span className={`text-[10px] w-fit px-1.5 py-0.5 rounded opacity-80 mt-1 ${trx.type === 'in' ? 'bg-emerald-500/10 text-emerald-600' : 'bg-rose-500/10 text-rose-600'}`}>{trx.type === 'in' ? 'Masuk' : 'Keluar'}</span>
-                      </td>
-                      <td className="p-3 px-3 text-[10px] text-muted-foreground whitespace-nowrap">{new Date(trx.date).toLocaleDateString('id-ID', {day:'2-digit', month:'2-digit'})} • {new Date(trx.date).toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'})}</td>
-                      <td className={`p-3 px-4 text-right font-black ${trx.type === 'in' ? 'text-emerald-600' : 'text-rose-600'}`}>{trx.type === 'in' ? '+' : '-'}{parseFloat(trx.amount).toLocaleString('id-ID')}</td>
-                      <td className="p-2 px-4 text-right"><div className="flex items-center justify-end gap-1"><button onClick={() => handleStartEdit(trx)} className="p-1.5 bg-secondary rounded hover:bg-muted transition-colors"><Pencil className="w-3 h-3"/></button><button onClick={() => handleDelete(trx.id)} className="p-1.5 bg-rose-500/5 text-rose-500 rounded hover:bg-rose-500/10 transition-colors"><Trash2 className="w-3 h-3"/></button></div></td>
-                    </>
-                  )}
+          {/* Wrapper scroll horizontal agar tabel bisa digeser di HP */}
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse" style={{ minWidth: '520px' }}>
+              <thead className="bg-muted/30 text-[10px] text-muted-foreground uppercase">
+                <tr className="border-b">
+                  <th className="p-2 px-4 text-left font-bold">Keterangan</th>
+                  <th className="p-2 px-3 text-left font-bold" style={{ minWidth: '80px' }}>Waktu</th>
+                  <th className="p-2 px-4 text-right font-bold" style={{ minWidth: '100px' }}>Nominal</th>
+                  <th className="p-2 px-4 text-center font-bold" style={{ minWidth: '90px' }}>Aksi</th>
                 </tr>
-              ))}
-              {filteredData.length === 0 && (<tr><td colSpan={4} className="p-8 text-center text-xs text-muted-foreground">Kosong.</td></tr>)}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y">
+                {filteredData.map((trx) => (
+                  <tr key={trx.id} className="hover:bg-muted/20 transition-colors">
+                    {editingId === trx.id ? (
+                      <>
+                        <td className="p-2 px-3"><input type="text" value={editTitle} onChange={e => setEditTitle(e.target.value)} className="w-full p-1.5 border rounded text-xs font-bold bg-background" /></td>
+                        <td className="p-2 px-3 text-[10px] text-muted-foreground">Editing..</td>
+                        <td className="p-2 px-3"><input type="number" value={editAmount} onChange={e => setEditAmount(e.target.value)} className="w-full p-1.5 border rounded text-right text-xs font-bold bg-background" /></td>
+                        <td className="p-2 px-4">
+                          <div className="flex items-center justify-center gap-1.5">
+                            <button onClick={() => handleSaveEdit(trx.id)} className="p-2 bg-emerald-500 text-white rounded-md"><Check className="w-3.5 h-3.5"/></button>
+                            <button onClick={() => setEditingId(null)} className="p-2 bg-muted rounded-md"><X className="w-3.5 h-3.5"/></button>
+                          </div>
+                        </td>
+                      </>
+                    ) : (
+                      <>
+                        <td className="p-3 px-4 font-bold">
+                          <span>{trx.title}</span>
+                          <span className={`block text-[10px] w-fit px-1.5 py-0.5 rounded opacity-80 mt-1 ${trx.type === 'in' ? 'bg-emerald-500/10 text-emerald-600' : 'bg-rose-500/10 text-rose-600'}`}>{trx.type === 'in' ? 'Masuk' : 'Keluar'}</span>
+                        </td>
+                        <td className="p-3 px-3 text-[10px] text-muted-foreground whitespace-nowrap">{new Date(trx.date).toLocaleDateString('id-ID', {day:'2-digit', month:'2-digit'})} • {new Date(trx.date).toLocaleTimeString('id-ID', {hour:'2-digit', minute:'2-digit'})}</td>
+                        <td className={`p-3 px-4 text-right font-black whitespace-nowrap ${trx.type === 'in' ? 'text-emerald-600' : 'text-rose-600'}`}>{trx.type === 'in' ? '+' : '-'}{parseFloat(trx.amount).toLocaleString('id-ID')}</td>
+                        <td className="p-2 px-4">
+                          <div className="flex items-center justify-center gap-1.5">
+                            <button onClick={() => handleStartEdit(trx)} className="p-2 bg-secondary rounded-md hover:bg-muted transition-colors" title="Edit">
+                              <Pencil className="w-3.5 h-3.5"/>
+                            </button>
+                            <button onClick={() => handleDelete(trx.id)} className="p-2 bg-rose-500/10 text-rose-500 rounded-md hover:bg-rose-500/20 transition-colors" title="Hapus">
+                              <Trash2 className="w-3.5 h-3.5"/>
+                            </button>
+                          </div>
+                        </td>
+                      </>
+                    )}
+                  </tr>
+                ))}
+                {filteredData.length === 0 && (<tr><td colSpan={4} className="p-8 text-center text-xs text-muted-foreground">Kosong.</td></tr>)}
+              </tbody>
+            </table>
+          </div>
+          {/* Petunjuk geser di HP */}
+          <p className="text-[9px] text-center text-muted-foreground py-1.5 bg-muted/20 md:hidden">← Geser tabel untuk lihat tombol Aksi →</p>
         </CardContent>
       </Card>
     </MainLayout>

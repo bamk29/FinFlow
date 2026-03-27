@@ -1,61 +1,90 @@
 import { MainLayout } from '@/components/layout/main-layout';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { addTransaction } from '@/app/actions/transaction';
 
+// Halaman input transaksi baru: compact mode dengan kategori dan tanggal
 export default function AddPage() {
   return (
     <MainLayout>
-      <header className="mb-6">
-        <h1 className="text-3xl font-black tracking-tight text-primary">Catat Uang Baru 💸</h1>
-        <p className="text-muted-foreground mt-2 text-lg">Hari ini habis belanja apa? Atau dapat rezeki dari mana?</p>
+      <header className="mb-4">
+        <h1 className="text-xl font-bold text-primary">Catat Uang Baru 💸</h1>
+        <p className="text-[11px] text-muted-foreground">Hari ini habis belanja apa? Atau dapat rezeki dari mana?</p>
       </header>
 
-      <Card className="max-w-xl border-primary/20 shadow-xl">
-        <CardHeader className="bg-primary/5 rounded-t-xl border-b border-primary/10">
-          <CardTitle className="text-2xl">Buku Catatan</CardTitle>
-          <CardDescription className="text-base">Isi nominal dan keterangan di bawah ini.</CardDescription>
-        </CardHeader>
-        <CardContent className="pt-6">
-          <form action={addTransaction} className="space-y-6">
-            <div className="space-y-3">
-              <label className="text-lg font-bold text-foreground">Berapa Uangnya? (Rp)</label>
+      <Card className="max-w-lg shadow-none border-primary/20">
+        <CardContent className="p-4">
+          <form action={addTransaction} className="space-y-3">
+            {/* Nominal */}
+            <div>
+              <label className="text-[11px] font-bold text-muted-foreground">Berapa Uangnya? (Rp)</label>
               <input 
                 type="number" 
                 name="amount" 
                 placeholder="Contoh: 50000" 
                 required 
-                className="w-full text-2xl p-4 border-2 border-primary/20 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary/20 font-bold transition-all"
+                className="w-full text-xl p-3 border-2 border-primary/20 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary/20 font-bold transition-all bg-background"
               />
             </div>
 
-            <div className="space-y-3">
-              <label className="text-lg font-bold text-foreground">Uang Untuk Apa?</label>
+            {/* Keterangan */}
+            <div>
+              <label className="text-[11px] font-bold text-muted-foreground">Uang Untuk Apa?</label>
               <input 
                 type="text" 
                 name="title" 
                 placeholder="Contoh: Beli Sate, Bayar Listrik, Gaji Ayah..." 
                 required 
-                className="w-full text-xl p-4 border-2 border-primary/20 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary/20 transition-all"
+                className="w-full text-sm p-3 border-2 border-primary/20 rounded-xl focus:outline-none focus:ring-4 focus:ring-primary/20 transition-all bg-background"
               />
             </div>
 
-            <div className="pt-4 grid grid-cols-2 gap-4">
+            {/* Kategori & Tanggal (Grid 2 kolom) */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-[11px] font-bold text-muted-foreground">Kategori</label>
+                <select 
+                  name="category" 
+                  className="w-full text-sm p-3 border-2 border-primary/20 rounded-xl bg-background appearance-none focus:outline-none focus:ring-4 focus:ring-primary/20"
+                >
+                  <option value="Umum">📦 Umum</option>
+                  <option value="Makan">🍛 Makan & Minum</option>
+                  <option value="Transport">🚗 Transportasi</option>
+                  <option value="Belanja">🛒 Belanja</option>
+                  <option value="Tagihan">🧾 Tagihan</option>
+                  <option value="Pendidikan">📚 Pendidikan</option>
+                  <option value="Kesehatan">🏥 Kesehatan</option>
+                  <option value="Hiburan">🎬 Hiburan</option>
+                  <option value="Gaji">💰 Gaji/Penghasilan</option>
+                  <option value="Lainnya">📌 Lainnya</option>
+                </select>
+              </div>
+              <div>
+                <label className="text-[11px] font-bold text-muted-foreground">Tanggal (Opsional)</label>
+                <input 
+                  type="date" 
+                  name="date" 
+                  className="w-full text-sm p-3 border-2 border-primary/20 rounded-xl bg-background focus:outline-none focus:ring-4 focus:ring-primary/20"
+                />
+              </div>
+            </div>
+
+            {/* Tombol Aksi */}
+            <div className="grid grid-cols-2 gap-3 pt-2">
               <button 
                 type="submit" 
                 name="type" 
                 value="in" 
-                className="w-full py-4 bg-emerald-500 hover:bg-emerald-600 text-white text-xl font-bold rounded-2xl shadow-lg shadow-emerald-500/30 transform active:scale-95 transition-all"
+                className="w-full py-3 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-emerald-500/20 active:scale-95 transition-all"
               >
-                + Uang Masuk
+                ＋ Uang Masuk
               </button>
-              
               <button 
                 type="submit" 
                 name="type" 
                 value="out" 
-                className="w-full py-4 bg-rose-500 hover:bg-rose-600 text-white text-xl font-bold rounded-2xl shadow-lg shadow-rose-500/30 transform active:scale-95 transition-all"
+                className="w-full py-3 bg-rose-500 hover:bg-rose-600 text-white text-sm font-bold rounded-xl shadow-lg shadow-rose-500/20 active:scale-95 transition-all"
               >
-                - Uang Keluar
+                ー Uang Keluar
               </button>
             </div>
           </form>

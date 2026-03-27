@@ -10,11 +10,15 @@ export async function addTransaction(formData: FormData) {
   const amount = Number(formData.get('amount'));
   const title = formData.get('title') as string;
   const type = formData.get('type') as 'in' | 'out';
+  const category = (formData.get('category') as string) || 'Umum';
+  const dateStr = formData.get('date') as string;
 
   if (!amount || !title) return;
 
-  // Karena belum ada sistem login Web rumit, kita asumsikan ini masuk ke Dompet Utama "Keluarga"
-  // Mencari dompet yang ada, atau membuat pancingan dummy jika benar-benar kosong
+  // Gunakan tanggal dari form, atau hari ini jika kosong
+  const date = dateStr ? new Date(dateStr) : new Date();
+
+  // Ambil dompet utama keluarga
   let firstWallet = await db.select().from(wallets).limit(1);
   let walletId = firstWallet[0]?.id;
 
@@ -27,8 +31,9 @@ export async function addTransaction(formData: FormData) {
     walletId,
     amount: amount.toString(),
     type,
-    category: 'Umum',
+    category,
     title,
+    date,
   } as any);
 
   revalidatePath('/');
